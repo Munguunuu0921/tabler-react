@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+
+    environment {
+        PATH = "/usr/local/bin:$PATH"
+    }
+
+    stages {
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t tabler-react-app .'
+            }
+        }
+
+        stage('Run Container') {
+            steps {
+                sh '''
+                    docker rm -f tabler-react-app || true
+                    docker run -d -p 3000:80 --name tabler-react-app tabler-react-app
+                '''
+            }
+        }
+    }
+}
