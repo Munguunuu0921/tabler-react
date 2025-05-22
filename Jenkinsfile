@@ -20,5 +20,13 @@ pipeline {
                 '''
             }
         }
+
+        stage('Build React App') {
+  steps {
+    sh 'yarn install'
+    sh 'yarn build'
+    sh 'ls -la build' // <- энэ нэмэлтээр build фолдер үүсэж буй эсэхийг харна
+  }
+}
     }
 }
